@@ -9,7 +9,7 @@ namespace BadTerminalCalculator
         public double Input1;
         public double Input2;
         public double Result;
-        public string ExecutionLog;
+        public int IterationsCount;
     }
 
     public class Calculator
@@ -19,38 +19,24 @@ namespace BadTerminalCalculator
         public double Add(double a, double b)
         {
             double result = a + b;
-            SaveToHistory("Dodawanie", a, b, result, "Wykonano standardowe dodawanie.");
+            SaveToHistory("Dodawanie", a, b, result, 1);
             return result;
         }
 
         public double Subtract(double a, double b)
         {
             double result = a - b;
-            SaveToHistory("Odejmowanie", a, b, result, "Wykonano standardowe odejmowanie.");
+            SaveToHistory("Odejmowanie", a, b, result, 1);
             return result;
         }
 
         public double Multiply(double a, double b)
         {
-            double result = 0;
-            int iterations = (int)Math.Abs(b);
-            
-            string traceLog = "Rozpoczecie operacji mnozenia:\n"; 
-
-            for (int i = 0; i < iterations; i++)
-            {
-                result += Math.Pow(Math.Sqrt(a), 2);
-                
-                traceLog += $"Iteracja {i}: zaktualizowano wynik do {result}\n";
-            }
-            
-            if (b < 0)
-            {
-                result = -result;
-            }
+            double result = a * b;
 
             result = Math.Round(result, 4);
-            SaveToHistory("Mnozenie", a, b, result, traceLog);
+
+            SaveToHistory("Mnozenie", a, b, result, 1);
 
             return result;
         }
@@ -62,11 +48,11 @@ namespace BadTerminalCalculator
                 throw new DivideByZeroException("Nie mozna dzielic przez zero!");
             }
             double result = a / b;
-            SaveToHistory("Dzielenie", a, b, result, "Wykonano standardowe dzielenie.");
+            SaveToHistory("Dzielenie", a, b, result, 1);
             return result;
         }
 
-        private void SaveToHistory(string opName, double in1, double in2, double res, string log)
+        private void SaveToHistory(string opName, double in1, double in2, double res, int iterations)
         {
             
             _operationHistory.Add(new OperationRecord
@@ -75,7 +61,7 @@ namespace BadTerminalCalculator
                 Input1 = in1,
                 Input2 = in2,
                 Result = res,
-                ExecutionLog = log
+                IterationsCount = iterations
             });
         }
     }
