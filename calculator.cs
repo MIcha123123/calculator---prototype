@@ -72,7 +72,7 @@ namespace BadTerminalCalculator
         {
             Calculator calc = new Calculator();
             bool keepRunning = true;
-
+            Console.WriteLine();
             while (keepRunning)
             {
                 Console.Clear();
@@ -148,3 +148,5 @@ namespace BadTerminalCalculator
         }
     }
 }
+
+//123
